@@ -20,7 +20,7 @@ impl Window {
                 eprintln!("Error: {e}");
             }
         }
-        // Sleep 3s
+        // Sleep for 3s
         println!("Sleeping for 3 seconds");
         thread::sleep(time::Duration::from_millis(3000));
         // Send app to the workspace
@@ -59,16 +59,16 @@ fn main() {
         command: String::from("md.obsidian.Obsidian"),
         workspace: 4,
     };
-    // Open editor and sleep 1s
+    // Open the editor and sleep for 1s
     editor.open();
     thread::sleep(time::Duration::from_millis(1000));
-    // Open browser and sleep 1s
+    // Open the browser and sleep for 1s
     browser.open();
     thread::sleep(time::Duration::from_millis(1000));
-    // Open music player and sleep 1 s
+    // Open the music player and sleep 1s
     music.open();
     thread::sleep(time::Duration::from_millis(1000));
-    // Open note taking app
+    // Open the note taking app
     note.open();
 
     // Exit
