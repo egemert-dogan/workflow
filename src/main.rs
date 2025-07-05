@@ -2,6 +2,9 @@
 
 // Import libraries
 use hyprland::dispatch::{Dispatch, DispatchType};
+use rodio::{source::Source, Decoder, OutputStream};
+use std::fs::File;
+use std::io::BufReader;
 use std::{process::exit, thread, time};
 
 struct Window {
@@ -41,7 +44,7 @@ impl Window {
 fn main() {
     // Define the editor
     let editor = Window {
-        command: String::from("alacritty --hold -e nvim"),
+        command: String::from("alacritty --hold -e nvim ~/projects/"),
         workspace: 1,
     };
     // Define the browser
@@ -71,7 +74,14 @@ fn main() {
     // Open the note taking app
     note.open();
 
-    // Exit
     println!("Done.");
+    // Play sound
+    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+    let file = BufReader::new(File::open("assets/sound.mp3").unwrap());
+    let source = Decoder::new(file).unwrap();
+    let _ = stream_handle.play_raw(source.convert_samples());
+    thread::sleep(time::Duration::from_secs(2));
+
+    // Exit
     exit(0);
 }
