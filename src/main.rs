@@ -2,9 +2,7 @@
 
 // Import libraries
 use hyprland::dispatch::{Dispatch, DispatchType};
-use rodio::{source::Source, Decoder, OutputStream};
-use std::fs::File;
-use std::io::BufReader;
+use notify_rust::{Hint, Notification};
 use std::{process::exit, thread, time};
 
 struct Window {
@@ -75,12 +73,14 @@ fn main() {
     note.open();
 
     println!("Done.");
-    // Play sound
-    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
-    let file = BufReader::new(File::open("assets/sound.mp3").unwrap());
-    let source = Decoder::new(file).unwrap();
-    let _ = stream_handle.play_raw(source.convert_samples());
-    thread::sleep(time::Duration::from_secs(2));
+
+    // Send notification
+    thread::sleep(time::Duration::from_millis(1000));
+    let _ = Notification::new()
+        .summary("Workflow")
+        .body("is ready to use.")
+        .hint(Hint::Resident(true))
+        .show();
 
     // Exit
     exit(0);
